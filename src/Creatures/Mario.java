@@ -43,6 +43,12 @@ public class Mario extends Creature {
 		
 	}
 
+	@Override
+	void setImg() {
+		super.currImg = img[0][1];
+		
+	}
+
 	
 	
 	

@@ -28,4 +28,10 @@ public class Turtle extends Creature{
 		
 	}
 
+	@Override
+	void setImg() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

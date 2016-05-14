@@ -59,7 +59,23 @@ public int getPartCoordY(int n) {
 }
 	
 
-	 public void addCloud(int x,int y){
+	 public int getFloorX() {
+	return floorX;
+}
+
+public void setFloorX(int floorX) {
+	this.floorX = floorX;
+}
+
+public int getFloorY() {
+	return floorY;
+}
+
+public void setFloorY(int floorY) {
+	this.floorY = floorY;
+}
+
+	public void addCloud(int x,int y){
 		 loadElements(new Cloud(), x, y);
 	 }
 	 public void addTruba(int x,int y){
@@ -74,6 +90,7 @@ public int getPartCoordY(int n) {
 	 public void addStep(int x,int y){
 		 loadElements(new Step(), x, y);
 	 }
+	 
 	 
  
  

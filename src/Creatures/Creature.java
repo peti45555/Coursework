@@ -4,6 +4,7 @@ import java.awt.Image;
 
 public abstract class Creature {
 
+	Image currImg;
 	private double posX,posY;
 	private double HEIGHT,WIGHT;
 	private double speedX,speedY;
@@ -11,10 +12,12 @@ public abstract class Creature {
 	private boolean alive;
 	Image [][]img = imgLoader();
 	
+	
 	abstract Image[][] imgLoader();
 	abstract void coordLoader();
 	abstract void setformFactor();
 	abstract void jump();
+	abstract void setImg();
 	
 	
 	public Creature() {
@@ -23,8 +26,12 @@ public abstract class Creature {
 		imgLoader();
 		coordLoader();
 		setformFactor();
+		setImg();
 	}
 	
+	public Image getImg(){
+		return currImg;
+	}
 	public void stop(){
 		speedX = 0;
 		speedY = 0;
@@ -83,6 +90,18 @@ public abstract class Creature {
 	public void setAlive(boolean alive) {
 		this.alive = alive;
 	}
-	
-
+	public Boolean isRuning(){
+		if(speedX!=0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public Boolean isFluying(){
+		if(speedY!=0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
