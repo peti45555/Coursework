@@ -4,6 +4,9 @@ import java.awt.Image;
 
 public abstract class Creature {
 
+	boolean ableToGoR,ableToGoL,ableToGoUp,ableToGoD;
+	
+	
 	Image currImg;
 	private double posX,posY;
 	private double HEIGHT,WIGHT;
@@ -103,5 +106,29 @@ public abstract class Creature {
 		}else{
 			return false;
 		}
+	}
+	public boolean isAbleToGoL() {
+		return ableToGoL;
+	}
+	public void setAbleToGoL(boolean ableToGoL) {
+		this.ableToGoL = ableToGoL;
+	}
+	public boolean isAbleToGoUp() {
+		return ableToGoUp;
+	}
+	public void setAbleToGoUp(boolean ableToGoUp) {
+		this.ableToGoUp = ableToGoUp;
+	}
+	public boolean isAbleToGoD() {
+		return ableToGoD;
+	}
+	public void setAbleToGoD(boolean ableToGoD) {
+		this.ableToGoD = ableToGoD;
+	}
+	public boolean isAbleToGoR() {
+		return ableToGoR;
+	}
+	public void setAbleToGoR(boolean ableToGoR) {
+		this.ableToGoR = ableToGoR;
 	}
 }

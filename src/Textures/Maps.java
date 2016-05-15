@@ -9,7 +9,16 @@ public abstract class Maps {
 	int numberOfTextures = 0;
 	int length;
 	Texture floor;
+	int begining = 0;
 	
+	public int getBegining() {
+		return begining;
+	}
+
+	public void setBegining(int begining) {
+		this.begining = begining;
+	}
+
 	public void setLength(int length) {
 		this.length = length;
 	}
@@ -91,9 +100,57 @@ public void setFloorY(int floorY) {
 		 loadElements(new Step(), x, y);
 	 }
 	 
+	 public boolean ableToGoRight(double x,double y,double height,double wight){
+		
+		 for(int i = 0;i<numberOfTextures;i++){
+			 if(x < texturesCoordX.get(i))
+			 if( x < textures.get(i).getWeight()+texturesCoordX.get(i)  && x + wight > texturesCoordX.get(i) ){
+				
+				 if( y < textures.get(i).getHeight()+texturesCoordY.get(i) && y+height>texturesCoordY.get(i)){
+					 return false;
+				 }
+			 }
+		 }
+		return true;	 
+	 }
+	 public boolean ableToGoLeft(double x,double y,double height,double wight){
+		 if(x<1){
+			 return false;
+		 }
+		 for(int i = 0;i<numberOfTextures;i++){
+			 if(x > texturesCoordX.get(i))
+			 if( x < textures.get(i).getWeight()+texturesCoordX.get(i) && x > texturesCoordX.get(i)  ){
+				 if( y < textures.get(i).getHeight()+texturesCoordY.get(i) && y+height>texturesCoordY.get(i)){
+					 return false;
+				 }
+			 }
+		 }
+		return true;	 
+	 }
 	 
- 
- 
+	 public boolean ableToGoDown(double x,double y,double height,double wight){
+		 for (int i = 0; i < numberOfTextures; i++) {
+			 if(x + 3 < textures.get(i).getWeight()+texturesCoordX.get(i)  && x + wight-2 > texturesCoordX.get(i)){
+				 if( y < texturesCoordY.get(i)+textures.get(i).getHeight())
+				 if(y + height+3 > texturesCoordY.get(i)){
+					 return false;
+				 }
+			 }
+		} 
+		 return true;
+	 }
+	 public boolean ableToGoUp(double x,double y,double height,double wight){
+		 
+		 for (int i = 0; i < numberOfTextures; i++) {
+			 if(x + 2 < textures.get(i).getWeight()+texturesCoordX.get(i)  && x-2 + wight > texturesCoordX.get(i)){
+				 
+				 if( y - 1 < textures.get(i).getWeight()+texturesCoordY.get(i) && y+5 >textures.get(i).getWeight()+texturesCoordY.get(i) ){
+					 return false;
+				 }
+			 }
+		} 
+		 return true;
+		}
  
 
 

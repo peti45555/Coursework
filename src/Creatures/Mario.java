@@ -7,8 +7,8 @@ public class Mario extends Creature {
 
 	@Override
 	void coordLoader() {
-		super.setPosX(30);
-		super.setPosY(100);
+		super.setPosX(0);
+		super.setPosY(500);
 	}
 
 	@Override
@@ -39,8 +39,7 @@ public class Mario extends Creature {
 
 	@Override
 	void jump() {
-		// TODO Auto-generated method stub
-		
+		super.setSpeedY(5);
 	}
 
 	@Override

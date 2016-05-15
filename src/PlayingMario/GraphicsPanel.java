@@ -61,16 +61,29 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 		
 		
 		
-		if (code == KeyEvent.VK_LEFT){
+		if (code == KeyEvent.VK_D){
 			vely = 0;
 			velx = -1;
-		}
-		if (code == KeyEvent.VK_RIGHT){
-			vely = 0;
-			velx = 1;
+			
+		
+				mario.setSpeedX(2);
 			
 		}
 		
+		if (code == KeyEvent.VK_A){
+			vely = 0;
+			velx = 1;
+			
+			mario.setSpeedX(-2);
+		}
+		
+		if (code == KeyEvent.VK_W){
+			mario.setSpeedY(-2);
+		}
+		
+		if (code == KeyEvent.VK_S){
+			mario.setSpeedY(2);
+		}
 	}
 
 
@@ -78,10 +91,10 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 	public void keyReleased(KeyEvent e) {
 		velx = 0; vely =0;
 		
+		mario.setSpeedY(0);
+		mario.setSpeedX(0);
 	}
 
-
-	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
@@ -91,7 +104,34 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		
+		if(map.ableToGoRight(mario.getPosX(), mario.getPosY(), mario.getHEIGHT(), mario.getWIGHT())){
+			mario.setAbleToGoR(true);
+		}else{
+			mario.setAbleToGoR(false);
+			if(mario.getSpeedX()==2)
+			mario.setSpeedX(0);
+		}
+		if(map.ableToGoLeft(mario.getPosX(), mario.getPosY(), mario.getHEIGHT(), mario.getWIGHT())){
+			mario.setAbleToGoL(true);
+		}else{
+			mario.setAbleToGoL(false);
+			if(mario.getSpeedX()==-2)
+			mario.setSpeedX(0);
+		}
+		if(map.ableToGoDown(mario.getPosX(), mario.getPosY(), mario.getHEIGHT(), mario.getWIGHT())){
+			mario.setAbleToGoD(true);
+		}else{
+			mario.setAbleToGoD(false);
+			if(mario.getSpeedY()>0)
+			mario.setSpeedY(0);
+		}
+		if(map.ableToGoUp(mario.getPosX(), mario.getPosY(), mario.getHEIGHT(), mario.getWIGHT())){
+			mario.setAbleToGoUp(true);
+		}else{
+			mario.setAbleToGoUp(false);
+			if(mario.getSpeedY()<0)
+			mario.setSpeedY(0);
+		}
 		
 		if(x < 0){
 			velx=0;
@@ -119,6 +159,9 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 
 		x += velx;
 		y += vely;
+		
+		mario.setPosY(mario.getPosY()+mario.getSpeedY());
+		mario.setPosX(mario.getPosX()+mario.getSpeedX());
 		repaint();
 		
 		
