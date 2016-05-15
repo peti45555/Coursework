@@ -9,11 +9,13 @@ public abstract class Texture {
 	public Image img;
 	double weight,height;
 	String path;
+	boolean visible;
 	
-	public Texture(String path,double weight,double height) {
+	public Texture(String path,double weight,double height,boolean visible) {
 		this.height = height;
 		this.weight = weight;
 		this.path = path;
+		this.visible = visible;
 		loadTexture();
 	}
 	
@@ -44,6 +46,11 @@ public abstract class Texture {
 	public void setPath(String path) {
 		this.path = path;
 	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+	
 
 	
 }

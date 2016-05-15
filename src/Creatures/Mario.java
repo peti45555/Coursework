@@ -17,7 +17,6 @@ public class Mario extends Creature {
 	void setformFactor() {
 		super.setHEIGHT(62);
 		super.setWIGHT(32);
-		
 	}
 
 	@Override
@@ -34,13 +33,10 @@ public class Mario extends Creature {
 						{new ImageIcon(getClass().getResource("/Mario/Mario_rrun1.png")).getImage(),
 						 new ImageIcon(getClass().getResource("/Mario/Mario_rrun2.png")).getImage(),
 						 new ImageIcon(getClass().getResource("/Mario/Mario_rrun3.png")).getImage()}
-				};
-		
+				};	
 		return img;
 	}
-
 	
-
 	@Override
 	void setImg() {
 		super.setCurrImg(img[0][1]);
@@ -54,13 +50,8 @@ public class Mario extends Creature {
 				super.setCurrImg(img[1][1] );
 			if(super.getSpeedX()<0)
 				super.setCurrImg(img[1][0] );
-			System.out.println("changed");
 		}
-		
 		if(!super.isAbleToGoD()&&super.getSpeedX()!=0){
-			
-			
-				
 				if(super.getSpeedX()>0){
 					super.setCurrImg(img[3][run]);
 				}else{
@@ -68,24 +59,10 @@ public class Mario extends Creature {
 				}
 				run++;
 				if(run==3){
-				run=0;}
-			
-			
-		
-			
-			
+				run=0;}	
 		}
-		
 		if(super.getSpeedX()==0 && super.getSpeedY()==0){
 			super.setCurrImg(img[0][1] );
-			System.out.println("changed");
 		}
-		
-		
-		
 	}
-
-	
-	
-	
 }

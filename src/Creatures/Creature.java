@@ -5,8 +5,6 @@ import java.awt.Image;
 public abstract class Creature {
 
 	boolean ableToGoR,ableToGoL,ableToGoUp,ableToGoD;
-	
-	
 	private Image currImg;
 	private double posX,posY;
 	private double HEIGHT,WIGHT;

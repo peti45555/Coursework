@@ -25,9 +25,7 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 	CreatureMaker creator = new SingleMarioMaker();
 	Creature mario = creator.createCreature();
 	
-	Timer t = new Timer(4, this);
-	int x = 0, y = 0, velx =0, vely =0;
-	
+	Timer t = new Timer(5, this);
 	
 	public GraphicsPanel() {
 		t.start();
@@ -41,37 +39,32 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
 		
-		g.setColor(Color.RED);
-		g.fillRect(x,y,50,30);
-		
-		
+		//Малюємо Маріо
+		g2.drawImage(mario.getImg(),(int) mario.getPosX(), (int)mario.getPosY(), null);
 		//Малюємо карту
 		for (int i = 0; i < map.getNumberOfTextures(); i++) {
 			g2.drawImage(map.getPartImage(i), map.getPartCoordX(i), map.getPartCoordY(i), null);
+		
+		
 		}
 	
-		//Малюємо Маріо
-		g2.drawImage(mario.getImg(),(int) mario.getPosX(), (int)mario.getPosY(), null);
+		
 	}
-
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 
 		if (code == KeyEvent.VK_D){
-			vely = 0;
-			velx = -1;
 			mario.setSpeedX(2);
 		}
 		
 		if (code == KeyEvent.VK_A){
-			vely = 0;
-			velx = 1;
 			mario.setSpeedX(-2);
 		}
 		
 		if (code == KeyEvent.VK_SPACE){
+			if(!mario.isAbleToGoD())
 			mario.setSpeedY(-5);
 		}
 		
@@ -80,16 +73,13 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 		}
 	}
 
-
 	@Override
 	public void keyReleased(KeyEvent e) {
-		velx = 0; vely =0;
 		
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_D){
 			if(mario.getSpeedX()==2)
 				mario.setSpeedX(0);
-			
 		}
 		
 		if (code == KeyEvent.VK_A){
@@ -97,15 +87,9 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 				mario.setSpeedX(0);
 		}
 		
-		
-//		mario.setSpeedY(0);
-//		mario.setSpeedX(0);
 	}
 
-	public void keyTyped(KeyEvent e) {
-		
-	}
-
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -113,42 +97,23 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 		updateVectors(mario);
 		mario.update();
 		
-		if(x < 0){
-			velx=0;
-			x = 0;		
-		}
-
-		if(x > 530)
+		
+		
+		if(mario.getPosX()>=750&& mario.getSpeedX()>0)
 		{
-			velx=0;
-			x = 530;		
+			if(!map.shiftToDelta( (int) mario.getSpeedX())){
+				mario.setPosX(mario.getPosX()+mario.getSpeedX());
+			}
+		}else{
+			mario.setPosX(mario.getPosX()+mario.getSpeedX());
 		}
-
-		if(y < 0)
-		{
-			vely=0;
-			y = 0;		
-		}
-
-		if(y > 330)
-		{
-			vely=0;
-			y = 330;		
-		}
-
-
-		x += velx;
-		y += vely;
 		
 		
 		mario.setPosY(mario.getPosY()+mario.getSpeedY());
-		mario.setPosX(mario.getPosX()+mario.getSpeedX());
 		repaint();
-		
-		
 	}
 	
-	public void updateVectors(Creature creature){
+ 	public void updateVectors(Creature creature){
 		if(map.ableToGoRight(creature.getPosX(), creature.getPosY(), creature.getHEIGHT(), creature.getWIGHT())){
 			creature.setAbleToGoR(true);
 		}else{

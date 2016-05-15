@@ -7,29 +7,21 @@ public abstract class Maps {
 	
 	int floorX = 0,floorY = 573;
 	int numberOfTextures = 0;
-	int length;
+	int length,finallength;
 	Texture floor;
 	int begining = 0;
+	int []chasm;
 	
-	public int getBegining() {
-		return begining;
-	}
-
-	public void setBegining(int begining) {
-		this.begining = begining;
-	}
-
-	public void setLength(int length) {
-		this.length = length;
-	}
 
 	ArrayList<Texture> textures = new ArrayList<>();
 	ArrayList<Integer> texturesCoordX = new ArrayList<>();
 	ArrayList<Integer> texturesCoordY = new ArrayList<>();
 
 	
-	public Maps(Texture floor,int length) {
+	public Maps(Texture floor,int length,int[] chasmCoords) {
 		this.length = length;
+		this.finallength = length;
+		this.chasm = chasmCoords;
 		loadFloor(floor);
 	}
 	
@@ -40,14 +32,38 @@ private void loadElements(Texture texture,int x,int y) {
 		texturesCoordY.add(y);
 		numberOfTextures++;
 	}
+public boolean shiftToDelta(int delta){
+	
+	delta=-delta;
+	int member;
+	if(length < 1080){
+		return false;
+	}
+	length+=delta;
+	for (int i = 0; i < numberOfTextures; i++) {
+		member = texturesCoordX.get(i);
+		member += delta;
+		texturesCoordX.remove(i);
+		texturesCoordX.add(i, member);		
+	}
+	return true;
+}
 
 public void loadFloor(Texture texture){	
+	
 	while (floorX<length) {
+		
+			for (int i = 0; i < chasm.length; i++) {
+				if(chasm[i]<floorX && chasm[i]!=0){
+					chasm[i]=0;
+					floorX = (int) (floorX + texture.getWeight());	 
+				}
+			}
 			textures.add(texture);
 			texturesCoordX.add(floorX);
 			texturesCoordY.add(floorY);
 			numberOfTextures++;
-			floorX = (int) (floorX + new Brick().getWeight());	 
+			floorX = (int) (floorX + texture.getWeight());	 
 	}
 }
 
@@ -66,11 +82,10 @@ public int getPartCoordX(int n) {
 public int getPartCoordY(int n) {
 	return texturesCoordY.get(n);
 }
-	
-
-	 public int getFloorX() {
+ public int getFloorX() {
 	return floorX;
 }
+
 
 public void setFloorX(int floorX) {
 	this.floorX = floorX;
@@ -99,10 +114,25 @@ public void setFloorY(int floorY) {
 	 public void addStep(int x,int y){
 		 loadElements(new Step(), x, y);
 	 }
-	 
-	 public boolean ableToGoRight(double x,double y,double height,double wight){
-		
+	 public int getBegining() {
+			return begining;
+	 }
+	 public void setBegining(int begining) {
+			this.begining = begining;
+	 }
+
+	 public void setLength(int length) {
+			this.length = length;
+	 }
+	
+	  public boolean ableToGoRight(double x,double y,double height,double wight){
+		if( x > length-wight-10 ){
+			return false;
+		}
 		 for(int i = 0;i<numberOfTextures;i++){
+			 if(!textures.get(i).isVisible()){
+				 continue;
+			 }
 			 if(x < texturesCoordX.get(i))
 			 if( x < textures.get(i).getWeight()+texturesCoordX.get(i)  && x + wight > texturesCoordX.get(i) ){
 				
@@ -114,10 +144,14 @@ public void setFloorY(int floorY) {
 		return true;	 
 	 }
 	 public boolean ableToGoLeft(double x,double y,double height,double wight){
+		 
 		 if(x<1){
 			 return false;
 		 }
 		 for(int i = 0;i<numberOfTextures;i++){
+			 if(!textures.get(i).isVisible()){
+				 continue;
+			 }
 			 if(x > texturesCoordX.get(i))
 			 if( x < textures.get(i).getWeight()+texturesCoordX.get(i) && x > texturesCoordX.get(i)  ){
 				 if( y < textures.get(i).getHeight()+texturesCoordY.get(i) && y+height>texturesCoordY.get(i)){
@@ -130,6 +164,9 @@ public void setFloorY(int floorY) {
 	 
 	 public boolean ableToGoDown(double x,double y,double height,double wight){
 		 for (int i = 0; i < numberOfTextures; i++) {
+			 if(!textures.get(i).isVisible()){
+				 continue;
+			 }
 			 if(x + 3 < textures.get(i).getWeight()+texturesCoordX.get(i)  && x + wight-3 > texturesCoordX.get(i)){
 				 if( y-3 < texturesCoordY.get(i)+textures.get(i).getHeight())
 				 if(y + height+3 > texturesCoordY.get(i)){
@@ -143,6 +180,9 @@ public void setFloorY(int floorY) {
 	 public boolean ableToGoUp(double x,double y,double height,double wight){
 		 
 		 for (int i = 0; i < numberOfTextures; i++) {
+			 if(!textures.get(i).isVisible()){
+				 continue;
+			 }
 			 if(x + 3 < textures.get(i).getWeight()+texturesCoordX.get(i)  && x-3 + wight > texturesCoordX.get(i)){
 				 
 				 if( y - 5 < textures.get(i).getWeight()+texturesCoordY.get(i) && y+3 >textures.get(i).getWeight()+texturesCoordY.get(i) ){
