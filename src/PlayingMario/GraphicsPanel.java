@@ -25,7 +25,7 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 	CreatureMaker creator = new SingleMarioMaker();
 	Creature mario = creator.createCreature();
 	
-	Timer t = new Timer(5, this);
+	Timer t = new Timer(4, this);
 	int x = 0, y = 0, velx =0, vely =0;
 	
 	
@@ -58,31 +58,25 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
-		
-		
-		
+
 		if (code == KeyEvent.VK_D){
 			vely = 0;
 			velx = -1;
-			
-		
-				mario.setSpeedX(2);
-			
+			mario.setSpeedX(2);
 		}
 		
 		if (code == KeyEvent.VK_A){
 			vely = 0;
 			velx = 1;
-			
 			mario.setSpeedX(-2);
 		}
 		
-		if (code == KeyEvent.VK_W){
-			mario.setSpeedY(-2);
+		if (code == KeyEvent.VK_SPACE){
+			mario.setSpeedY(-5);
 		}
 		
 		if (code == KeyEvent.VK_S){
-			mario.setSpeedY(2);
+			mario.setSpeedY(4);
 		}
 	}
 
@@ -91,12 +85,24 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 	public void keyReleased(KeyEvent e) {
 		velx = 0; vely =0;
 		
-		mario.setSpeedY(0);
-		mario.setSpeedX(0);
+		int code = e.getKeyCode();
+		if (code == KeyEvent.VK_D){
+			if(mario.getSpeedX()==2)
+				mario.setSpeedX(0);
+			
+		}
+		
+		if (code == KeyEvent.VK_A){
+			if(mario.getSpeedX()==-2)
+				mario.setSpeedX(0);
+		}
+		
+		
+//		mario.setSpeedY(0);
+//		mario.setSpeedX(0);
 	}
 
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -104,34 +110,8 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(map.ableToGoRight(mario.getPosX(), mario.getPosY(), mario.getHEIGHT(), mario.getWIGHT())){
-			mario.setAbleToGoR(true);
-		}else{
-			mario.setAbleToGoR(false);
-			if(mario.getSpeedX()==2)
-			mario.setSpeedX(0);
-		}
-		if(map.ableToGoLeft(mario.getPosX(), mario.getPosY(), mario.getHEIGHT(), mario.getWIGHT())){
-			mario.setAbleToGoL(true);
-		}else{
-			mario.setAbleToGoL(false);
-			if(mario.getSpeedX()==-2)
-			mario.setSpeedX(0);
-		}
-		if(map.ableToGoDown(mario.getPosX(), mario.getPosY(), mario.getHEIGHT(), mario.getWIGHT())){
-			mario.setAbleToGoD(true);
-		}else{
-			mario.setAbleToGoD(false);
-			if(mario.getSpeedY()>0)
-			mario.setSpeedY(0);
-		}
-		if(map.ableToGoUp(mario.getPosX(), mario.getPosY(), mario.getHEIGHT(), mario.getWIGHT())){
-			mario.setAbleToGoUp(true);
-		}else{
-			mario.setAbleToGoUp(false);
-			if(mario.getSpeedY()<0)
-			mario.setSpeedY(0);
-		}
+		updateVectors(mario);
+		mario.update();
 		
 		if(x < 0){
 			velx=0;
@@ -160,10 +140,47 @@ public class GraphicsPanel extends JPanel implements ActionListener,KeyListener{
 		x += velx;
 		y += vely;
 		
+		
 		mario.setPosY(mario.getPosY()+mario.getSpeedY());
 		mario.setPosX(mario.getPosX()+mario.getSpeedX());
 		repaint();
 		
 		
 	}
+	
+	public void updateVectors(Creature creature){
+		if(map.ableToGoRight(creature.getPosX(), creature.getPosY(), creature.getHEIGHT(), creature.getWIGHT())){
+			creature.setAbleToGoR(true);
+		}else{
+			creature.setAbleToGoR(false);
+			if(creature.getSpeedX()==2)
+				creature.setSpeedX(0);
+		}
+		if(map.ableToGoLeft(creature.getPosX(), creature.getPosY(), creature.getHEIGHT(), creature.getWIGHT())){
+			creature.setAbleToGoL(true);
+		}else{
+			creature.setAbleToGoL(false);
+			if(creature.getSpeedX()==-2)
+				creature.setSpeedX(0);
+		}
+		if(map.ableToGoDown(creature.getPosX(), creature.getPosY(),creature.getHEIGHT(), creature.getWIGHT())){
+			creature.setAbleToGoD(true);
+			creature.setSpeedY(creature.getSpeedY()+creature.getAccY());
+		}else{
+			creature.setAbleToGoD(false);
+			if(creature.getSpeedY()>0)
+				creature.setSpeedY(0);
+		}
+		if(map.ableToGoUp(creature.getPosX(), creature.getPosY(), creature.getHEIGHT(), creature.getWIGHT())){
+			creature.setAbleToGoUp(true);
+		}else{
+			creature.setAbleToGoUp(false);
+			if(creature.getSpeedY()<0)
+				creature.setSpeedY(0);
+		}
+		if(!creature.isAbleToGoR()&&!creature.isAbleToGoL()){
+			creature.setPosY(creature.getPosY()-2);
+		}
+	}
+	
 }

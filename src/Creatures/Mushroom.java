@@ -22,14 +22,16 @@ public class Mushroom extends Creature{
 		return null;
 	}
 
+	
+
 	@Override
-	void jump() {
+	void setImg() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	void setImg() {
+	public void update() {
 		// TODO Auto-generated method stub
 		
 	}

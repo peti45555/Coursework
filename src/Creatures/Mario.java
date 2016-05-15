@@ -5,6 +5,8 @@ import java.awt.Image;
 
 public class Mario extends Creature {
 
+	int run=0;
+	
 	@Override
 	void coordLoader() {
 		super.setPosX(0);
@@ -37,14 +39,49 @@ public class Mario extends Creature {
 		return img;
 	}
 
-	@Override
-	void jump() {
-		super.setSpeedY(5);
-	}
+	
 
 	@Override
 	void setImg() {
-		super.currImg = img[0][1];
+		super.setCurrImg(img[0][1]);
+		
+	}
+	@Override
+	public void update() {
+		
+		if(super.isAbleToGoD()){
+			if(super.getSpeedX()>=0)
+				super.setCurrImg(img[1][1] );
+			if(super.getSpeedX()<0)
+				super.setCurrImg(img[1][0] );
+			System.out.println("changed");
+		}
+		
+		if(!super.isAbleToGoD()&&super.getSpeedX()!=0){
+			
+			
+				
+				if(super.getSpeedX()>0){
+					super.setCurrImg(img[3][run]);
+				}else{
+					super.setCurrImg(img[2][run]);
+				}
+				run++;
+				if(run==3){
+				run=0;}
+			
+			
+		
+			
+			
+		}
+		
+		if(super.getSpeedX()==0 && super.getSpeedY()==0){
+			super.setCurrImg(img[0][1] );
+			System.out.println("changed");
+		}
+		
+		
 		
 	}
 

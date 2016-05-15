@@ -12,6 +12,7 @@ public class TestMap extends Maps{
 		super.addMarble(100, 530);
 		super.addMarble(140, 530);
 		super.addMarble(140, 330);
+		super.addTruba(300, 468);
 	}
 
 	

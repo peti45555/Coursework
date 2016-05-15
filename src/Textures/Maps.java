@@ -130,9 +130,10 @@ public void setFloorY(int floorY) {
 	 
 	 public boolean ableToGoDown(double x,double y,double height,double wight){
 		 for (int i = 0; i < numberOfTextures; i++) {
-			 if(x + 3 < textures.get(i).getWeight()+texturesCoordX.get(i)  && x + wight-2 > texturesCoordX.get(i)){
-				 if( y < texturesCoordY.get(i)+textures.get(i).getHeight())
+			 if(x + 3 < textures.get(i).getWeight()+texturesCoordX.get(i)  && x + wight-3 > texturesCoordX.get(i)){
+				 if( y-3 < texturesCoordY.get(i)+textures.get(i).getHeight())
 				 if(y + height+3 > texturesCoordY.get(i)){
+					 
 					 return false;
 				 }
 			 }
@@ -142,9 +143,9 @@ public void setFloorY(int floorY) {
 	 public boolean ableToGoUp(double x,double y,double height,double wight){
 		 
 		 for (int i = 0; i < numberOfTextures; i++) {
-			 if(x + 2 < textures.get(i).getWeight()+texturesCoordX.get(i)  && x-2 + wight > texturesCoordX.get(i)){
+			 if(x + 3 < textures.get(i).getWeight()+texturesCoordX.get(i)  && x-3 + wight > texturesCoordX.get(i)){
 				 
-				 if( y - 1 < textures.get(i).getWeight()+texturesCoordY.get(i) && y+5 >textures.get(i).getWeight()+texturesCoordY.get(i) ){
+				 if( y - 5 < textures.get(i).getWeight()+texturesCoordY.get(i) && y+3 >textures.get(i).getWeight()+texturesCoordY.get(i) ){
 					 return false;
 				 }
 			 }

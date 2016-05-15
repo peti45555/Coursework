@@ -7,11 +7,11 @@ public abstract class Creature {
 	boolean ableToGoR,ableToGoL,ableToGoUp,ableToGoD;
 	
 	
-	Image currImg;
+	private Image currImg;
 	private double posX,posY;
 	private double HEIGHT,WIGHT;
 	private double speedX,speedY;
-	private double accY = 0.9;
+	private double accY = 0.1;
 	private boolean alive;
 	Image [][]img = imgLoader();
 	
@@ -19,8 +19,8 @@ public abstract class Creature {
 	abstract Image[][] imgLoader();
 	abstract void coordLoader();
 	abstract void setformFactor();
-	abstract void jump();
 	abstract void setImg();
+	abstract public void update();
 	
 	
 	public Creature() {
@@ -32,6 +32,9 @@ public abstract class Creature {
 		setImg();
 	}
 	
+	public void setCurrImg(Image currImg) {
+		this.currImg = currImg;
+	}
 	public Image getImg(){
 		return currImg;
 	}
