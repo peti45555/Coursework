@@ -62,7 +62,10 @@ public class Mushroom extends Creature{
 		}
 		if(super.isAbleToGoR()==false && super.isAbleToGoL()==false && super.isAbleToGoUp()){
 			super.setSpeedX(0);
-			super.setSpeedY(3);
+			super.setSpeedY(-3);
+		}
+		if(super.getSpeedX()==0){
+			super.setSpeedX(1);
 		}
 		super.setPosY(super.getPosY() + super.getSpeedY());
 		super.setPosX(super.getPosX() + super.getSpeedX());

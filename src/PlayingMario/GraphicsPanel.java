@@ -102,6 +102,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 
 		map.updateVectors(mario);
 		mario.update();
+		map.murderUpdate(mario);
 		
 		for (int i = 0; i < map.creatures.size(); i++) {
 			map.updateVectors(map.creatures.get(i));
@@ -121,40 +122,5 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 		mario.setPosY(mario.getPosY() + mario.getSpeedY());
 		repaint();
 	}
-
-//	public void updateVectors(Creature creature) {
-//		if (map.ableToGoRight(creature.getPosX(), creature.getPosY(), creature.getHEIGHT(), creature.getWIGHT())) {
-//			creature.setAbleToGoR(true);
-//		} else {
-//			creature.setAbleToGoR(false);
-//			if (creature.getSpeedX() == 2)
-//				creature.setSpeedX(0);
-//		}
-//		if (map.ableToGoLeft(creature.getPosX(), creature.getPosY(), creature.getHEIGHT(), creature.getWIGHT())) {
-//			creature.setAbleToGoL(true);
-//		} else {
-//			creature.setAbleToGoL(false);
-//			if (creature.getSpeedX() == -2)
-//				creature.setSpeedX(0);
-//		}
-//		if (map.ableToGoDown(creature.getPosX(), creature.getPosY(), creature.getHEIGHT(), creature.getWIGHT())) {
-//			creature.setAbleToGoD(true);
-//			creature.setSpeedY(creature.getSpeedY() + map.getAccY());
-//		} else {
-//			creature.setAbleToGoD(false);
-//			if (creature.getSpeedY() > 0)
-//				creature.setSpeedY(0);
-//		}
-//		if (map.ableToGoUp(creature.getPosX(), creature.getPosY(), creature.getHEIGHT(), creature.getWIGHT())) {
-//			creature.setAbleToGoUp(true);
-//		} else {
-//			creature.setAbleToGoUp(false);
-//			if (creature.getSpeedY() < 0)
-//				creature.setSpeedY(0);
-//		}
-//		if (!creature.isAbleToGoR() && !creature.isAbleToGoL()) {
-//			creature.setPosY(creature.getPosY() - 2);
-//		}
-//	}
 
 }

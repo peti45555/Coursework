@@ -49,14 +49,25 @@ public abstract class Maps {
 	}
 
 	public void murderUpdate(Creature mario) {
-		for(int i = 0; i<creatures.size();i++){
-		
-			if(mario.getPosX()+mario.getWIGHT()>creatures.get(i).getPosX() ||  )
-			
-			
+		for (int i = 0; i < creatures.size(); i++) {
+
+			if (mario.getPosX() + mario.getWIGHT() > creatures.get(i).getPosX()
+					&& mario.getPosX() < creatures.get(i).getPosX() + creatures.get(i).getWIGHT()) {
+
+				if (mario.getPosY() + mario.getHEIGHT() > creatures.get(i).getPosY()
+						&& mario.getPosY() < creatures.get(i).getPosY()) {
+
+					if (mario.getPosY() + mario.getHEIGHT() - creatures.get(i).getPosY() <= creatures.get(i).getHEIGHT()* 0.2) {
+						creatures.remove(i);
+						mario.setSpeedY(-3);
+					} else {
+						mario.setAlive(false);
+					}
+				}
+			}
 		}
 	}
-	
+
 	public boolean shiftToDelta(int delta) {
 
 		delta = -delta;
@@ -249,14 +260,14 @@ public abstract class Maps {
 			creature.setAbleToGoR(true);
 		} else {
 			creature.setAbleToGoR(false);
-			if (creature.getSpeedX() == 2)
+			if (creature.getSpeedX() >0)
 				creature.setSpeedX(0);
 		}
 		if (ableToGoLeft(creature.getPosX(), creature.getPosY(), creature.getHEIGHT(), creature.getWIGHT())) {
 			creature.setAbleToGoL(true);
 		} else {
 			creature.setAbleToGoL(false);
-			if (creature.getSpeedX() == -2)
+			if (creature.getSpeedX() < 0)
 				creature.setSpeedX(0);
 		}
 		if (ableToGoDown(creature.getPosX(), creature.getPosY(), creature.getHEIGHT(), creature.getWIGHT())) {
