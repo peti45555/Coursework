@@ -6,6 +6,7 @@ import java.awt.Image;
 public class Mario extends Creature {
 
 	int run = 0;
+	int timer = 0;
 
 	@Override
 	void coordLoader() {
@@ -43,6 +44,10 @@ public class Mario extends Creature {
 
 	@Override
 	public void update() {
+		timer++;
+		if(timer>7){
+			timer=0;
+		}
 		//не даємо маріо вийти за ліву сторону екранув
 		if(super.getPosX() <= 3){
 			if(super.getSpeedX()<0){
@@ -50,12 +55,16 @@ public class Mario extends Creature {
 			}
 		}
 		if (super.isAbleToGoD()) {
-			if (super.getSpeedX() >= 0)
+			if (super.getSpeedX() >= 0){
 				super.setCurrImg(img[1][1]);
-			if (super.getSpeedX() < 0)
+				timer = 0;
+			}
+			if (super.getSpeedX() < 0){
 				super.setCurrImg(img[1][0]);
+				timer = 0;
+			}
 		}
-		if (!super.isAbleToGoD() && super.getSpeedX() != 0) {
+		if (!super.isAbleToGoD() && super.getSpeedX() != 0 && timer==0) {
 			if (super.getSpeedX() > 0) {
 				super.setCurrImg(img[3][run]);
 			} else {
@@ -68,6 +77,7 @@ public class Mario extends Creature {
 		}
 		if (super.getSpeedX() == 0 && super.getSpeedY() == 0) {
 			super.setCurrImg(img[0][1]);
+			timer = 0;
 		}
 	}
 }

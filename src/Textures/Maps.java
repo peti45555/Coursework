@@ -11,7 +11,7 @@ public abstract class Maps {
 
 	int floorX = 0, floorY = 573;
 	int numberOfTextures = 0;
-	int length, finallength;
+	int length,finish = 0;
 	private double accY = 0.1;
 	Texture floor;
 	int begining = 0;
@@ -24,7 +24,6 @@ public abstract class Maps {
 
 	public Maps(Texture floor, int length, int[] chasmCoords) {
 		this.length = length;
-		this.finallength = length;
 		this.chasm = chasmCoords;
 		loadFloor(floor);
 	}
@@ -71,6 +70,7 @@ public abstract class Maps {
 	public boolean shiftToDelta(int delta) {
 
 		delta = -delta;
+		finish+=delta;
 		int member;
 		if (length < 1080) {
 			return false;
@@ -161,6 +161,23 @@ public abstract class Maps {
 
 	public void addStep(int x, int y) {
 		loadElements(new Step(), x, y);
+	}
+
+	public void addSmallCastle(int x){
+		try {
+			if(finish ==0 ){
+				loadElements(new SmallCastle(), x, floorY - (int)new SmallCastle().getHeight());
+				finish = x +(int)new SmallCastle().getWeight()/2;
+			}else{
+				throw new Exception("You may add only one castle at mup");
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public int getFinish() {
+		return finish;
 	}
 
 	public int getBegining() {

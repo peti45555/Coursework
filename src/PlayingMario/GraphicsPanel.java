@@ -15,28 +15,61 @@ import javax.swing.Timer;
 
 import Creatures.Creature;
 import Creatures.CreatureMaker;
+import Creatures.Mario;
 import Creatures.SingleMarioMaker;
 import Maps.TestMap;
 
 public class GraphicsPanel extends JPanel implements ActionListener, KeyListener {
 
-	TestMap map = new TestMap();
-	CreatureMaker creator = new SingleMarioMaker();
-	Creature mario = creator.createCreature();
-
+	boolean painted ;
+	int counter =0;
+	TestMap map;
+	Creature mario;
 	Timer t = new Timer(5, this);
 
 	public GraphicsPanel() {
+		counter = 0;
+		painted = false;
 		t.start();
+		mario = new Mario();
+		map = new TestMap();
 		addKeyListener(this);
 		setFocusable(true);
 	}
 
 	public void paintComponent(Graphics g) {
 
+		
+		super.setVisible(true);
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
+		if(counter>=200){
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("dfsdf");
+			t.stop();
+			g2.drawImage(new ImageIcon(getClass().getResource("/Screens/Game_over.png")).getImage(), 0, 0, null);
+			counter=0;
+			
+		}
+		
+		if(duyed()){
+			System.out.println("sdvd");
+			counter++;
+			g2.drawImage(new ImageIcon(getClass().getResource("/Screens/Game_over.png")).getImage(), 0, 0, null);
+			
+		}
+		
+		if(hadWon()){
+			counter++;
+			g2.drawImage(new ImageIcon(getClass().getResource("/Screens/Won.png")).getImage(), 0, 0, null);
+		}
+		
 		// Малюємо карту
 		for (int i = 0; i < map.getNumberOfTextures(); i++) {
 			g2.drawImage(map.getPartImage(i), map.getPartCoordX(i), map.getPartCoordY(i), null);
@@ -93,13 +126,11 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 	public void keyTyped(KeyEvent e) {
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		if (!mario.isAlive()) {
-			t.stop();
-		}
-
+		
+		
 		map.updateVectors(mario);
 		mario.update();
 		map.murderUpdate(mario);
@@ -108,7 +139,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 			map.updateVectors(map.creatures.get(i));
 			map.creatures.get(i).update();
 		}
-
+		
 		
 		
 		if (mario.getPosX() >= 750 && mario.getSpeedX() > 0) {
@@ -120,7 +151,37 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 		}
 
 		mario.setPosY(mario.getPosY() + mario.getSpeedY());
+		
 		repaint();
+	}
+	public void stop(){
+		//t.stop();
+	}
+	
+	public boolean duyed(){
+		if(!mario.isAlive()){
+		repaint();
+		return true;
+		}
+		return false;
+	}
+	
+	public boolean hadWon(){
+		if(mario.getPosX()>=map.getFinish()){
+	
+		return true;
+		}
+		return false;
+	}
+	
+	public boolean isAlive() {
+		return mario.isAlive();
+	}
+	public boolean hasWone() {
+		if(mario.getPosX()>=map.getFinish()){
+			return true;
+		}
+		return false;
 	}
 
 }
