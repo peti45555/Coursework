@@ -85,7 +85,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		if(graphicsPanel.duyed()||graphicsPanel.hadWon()){
 			t.stop();
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(3000);
 				//graphicsPanel.stop();
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block

@@ -5,6 +5,7 @@ import java.awt.Image;
 
 public class Mario extends Creature {
 
+	int kiled = 0;
 	int run = 0;
 	int timer = 0;
 
@@ -41,9 +42,19 @@ public class Mario extends Creature {
 		super.setCurrImg(img[0][1]);
 
 	}
+	
+	public void kiled(){
+		kiled++;
+	}
+	
+
+	public int getKiled() {
+		return kiled;
+	}
 
 	@Override
 	public void update() {
+		
 		timer++;
 		if(timer>7){
 			timer=0;

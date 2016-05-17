@@ -1,6 +1,5 @@
 package PlayingMario;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -26,6 +25,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 	TestMap map;
 	Creature mario;
 	Timer t = new Timer(5, this);
+	
 	Image gameOver ;
 	Image win ;
 
@@ -41,14 +41,15 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 		setFocusable(true);
 	}
 
-	public void paintComponent(Graphics g) {
+	public synchronized void paintComponent(Graphics g) {
 
-		
+		t.restart();
 		super.setVisible(true);
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
 		if(counter>=20){
+			
 			t.stop();
 			counter=0;
 		}
@@ -56,7 +57,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 		if(duyed()){
 			counter++;
 			g2.drawImage(gameOver, 0, 0, null);
-			
+			return;
 		}
 		
 		if(hadWon()){
@@ -153,7 +154,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 		//t.stop();
 	}
 	
-	public boolean duyed(){
+	public synchronized boolean duyed(){
 		if(!mario.isAlive()){
 		repaint();
 		return true;
@@ -161,7 +162,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 		return false;
 	}
 	
-	public boolean hadWon(){
+	public synchronized boolean hadWon(){
 		if(mario.getPosX()>=map.getFinish()){
 	
 		return true;

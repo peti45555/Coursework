@@ -48,8 +48,15 @@ public abstract class Maps {
 	}
 
 	public void murderUpdate(Creature mario) {
+		if(mario.getPosY()>floorY){
+			mario.setAlive(false);
+		}
 		for (int i = 0; i < creatures.size(); i++) {
-
+			
+			if(creatures.get(i).getPosY()>floorY){
+				creatures.get(i).setAlive(false);
+			}
+			
 			if (mario.getPosX() + mario.getWIGHT() > creatures.get(i).getPosX()
 					&& mario.getPosX() < creatures.get(i).getPosX() + creatures.get(i).getWIGHT()) {
 
@@ -58,6 +65,7 @@ public abstract class Maps {
 
 					if (mario.getPosY() + mario.getHEIGHT() - creatures.get(i).getPosY() <= creatures.get(i).getHEIGHT()* 0.2) {
 						creatures.remove(i);
+					//	mario.killed();
 						mario.setSpeedY(-3);
 					} else {
 						mario.setAlive(false);
@@ -90,12 +98,12 @@ public abstract class Maps {
 	}
 
 	public void loadFloor(Texture texture) {
-
+		int chasmSeted=0;
 		while (floorX < length) {
 
 			for (int i = 0; i < chasm.length; i++) {
-				if (chasm[i] < floorX && chasm[i] != 0) {
-					chasm[i] = 0;
+				if (chasm[i] < floorX && chasm[i] != chasmSeted && chasm[i]>chasmSeted) {
+					chasmSeted = chasm[i];
 					floorX = (int) (floorX + texture.getWeight());
 				}
 			}
