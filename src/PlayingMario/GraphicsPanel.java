@@ -26,8 +26,12 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 	TestMap map;
 	Creature mario;
 	Timer t = new Timer(5, this);
+	Image gameOver ;
+	Image win ;
 
 	public GraphicsPanel() {
+		gameOver = new ImageIcon(getClass().getResource("/Screens/Game_over.png")).getImage();
+		win = new ImageIcon(getClass().getResource("/Screens/Won.png")).getImage();
 		counter = 0;
 		painted = false;
 		t.start();
@@ -44,30 +48,21 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
-		if(counter>=200){
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println("dfsdf");
+		if(counter>=20){
 			t.stop();
-			g2.drawImage(new ImageIcon(getClass().getResource("/Screens/Game_over.png")).getImage(), 0, 0, null);
 			counter=0;
-			
 		}
 		
 		if(duyed()){
-			System.out.println("sdvd");
 			counter++;
-			g2.drawImage(new ImageIcon(getClass().getResource("/Screens/Game_over.png")).getImage(), 0, 0, null);
+			g2.drawImage(gameOver, 0, 0, null);
 			
 		}
 		
 		if(hadWon()){
 			counter++;
-			g2.drawImage(new ImageIcon(getClass().getResource("/Screens/Won.png")).getImage(), 0, 0, null);
+			g2.drawImage(win, 0, 0, null);
+			return;
 		}
 		
 		// Малюємо карту
