@@ -13,13 +13,18 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import Creatures.Creature;
-import Creatures.CreatureMaker;
 import Creatures.Mario;
-import Creatures.SingleMarioMaker;
 import Maps.TestMap;
+import Textures.ImageContainer;
 
 public class GraphicsPanel extends JPanel implements ActionListener, KeyListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	ImageContainer images = new ImageContainer();
 	boolean painted ;
 	int counter =0;
 	TestMap map;
@@ -68,7 +73,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 		
 		// Малюємо карту
 		for (int i = 0; i < map.getNumberOfTextures(); i++) {
-			g2.drawImage(map.getPartImage(i), map.getPartCoordX(i), map.getPartCoordY(i), null);
+			g2.drawImage(images.getTextureImg(map.getOnIndex(i)), map.getPartCoordX(i), map.getPartCoordY(i), null);
 		}
 		
 		// Малюємо істот

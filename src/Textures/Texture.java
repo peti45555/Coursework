@@ -1,12 +1,7 @@
 package Textures;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-
 public abstract class Texture {
 	
-	public Image img;
 	double weight,height;
 	String path;
 	boolean visible;
@@ -16,18 +11,9 @@ public abstract class Texture {
 		this.weight = weight;
 		this.path = path;
 		this.visible = visible;
-		loadTexture();
 	}
 	
-	void loadTexture(){
-		img = new ImageIcon(getClass().getResource(path)).getImage();
-	}
-	public Image getImg() {
-		return img;
-	}
-	public void setImg(Image img) {
-		this.img = img;
-	}
+	
 	public double getWeight() {
 		return weight;
 	}

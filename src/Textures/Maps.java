@@ -1,8 +1,6 @@
 package Textures;
 
-import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import Creatures.Creature;
 import Creatures.Mushroom;
@@ -123,8 +121,8 @@ public abstract class Maps {
 		return length;
 	}
 
-	public Image getPartImage(int n) {
-		return textures.get(n).getImg();
+	public Texture getOnIndex(int n) {
+		return textures.get(n);
 	}
 
 	public int getPartCoordX(int n) {
